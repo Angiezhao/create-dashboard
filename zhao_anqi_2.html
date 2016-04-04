@@ -1,0 +1,107 @@
+<!doctype html>
+<html>
+	<head>
+	<meta charset="UTF-8">
+		<title>zhao_anqi_HW1</title>
+		<style>
+			body {
+				margin: 0px; 
+				font-family: Helvetica, Arial, sans-serif;
+			}
+			h1{
+				background-color: #000000;
+				color: #ccc;
+				padding: 10px;
+
+			}
+			h2{
+				color: #000000;
+				font-weight: bolder;
+			} 
+			li{
+				background-color: none;
+				list-style: none;
+				padding-top: 5px;
+			}
+			button {
+				background-color: white;
+				font-color: black;
+				border-style:solid;
+			}
+			button:hover {
+				background-color: steelblue;
+			}
+			#contents {
+				padding-left: 20px;
+			}
+			.special {
+				border-bottom: solid 1px #ccc;
+			}
+			
+        </style>
+	</head>
+
+	<body>
+        <h1>Gapiminder - Wealth and Health of Nations</h1>
+        <div id = "contents">
+        	<h2>Countries</h2>
+        	<!----- 
+            <div class = "special">
+                <label>Name </label>
+                <input type = "text" id = "textInput" />
+                <button onclick = "changeList();">Add</button>
+            </div>
+            <div id="log">
+                <li>
+                </li>
+            </div> 
+            ------->
+            
+            <!-----Week 2 ---->
+            <div>
+                <li id="viz"></li>
+            </div>
+        </div>
+	</body>
+    
+    <script src="//d3js.org/d3.v3.min.js" charset="utf-8"></script>
+    
+    <script>
+        //Week 1
+		var newList = "Add the name";
+		function logList (newList) {
+			var log = document.getElementById("log");
+			var newEntry = document.createElement("li");
+			newEntry.innerHTML = newList;
+			log.appendChild(newEntry);
+		}
+		function changeList(newList){
+			if(!newList){
+				newList = document.getElementById("textInput").value;
+			}
+			logList(newList);
+		}
+        
+        //Week 2 Codes
+		
+		var countries;
+        var viz = d3.select("#viz");
+        
+        d3.json("alien-game.json", function(errors,results){
+
+            if (errors){
+                console.log(errors);
+            } else {
+                countries = results;
+            }  
+
+            var changes = viz.selectAll("li")
+                .data(countries, function(c) { return c.username});
+            
+            changes.enter()
+                .append("li")
+                .text(function(c) { return c.username});
+            changes.exit().remove();
+        })
+	</script>
+</html>
